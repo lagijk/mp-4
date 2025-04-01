@@ -1,4 +1,4 @@
-import ChampionForm from "../components/champion-form";
+import ChampionForm from "../../components/champion-form";
 
 // app/about/page.tsx.  Home page for user input
 export default function Home() {
