@@ -5,10 +5,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Box, Typography, Paper, List, ListItem, ListItemText } from "@mui/material";
+import { Champion } from "@/type"
 
 export default function ChampionDisplay() {
     // stores champion data and any error
-    const [champ, setChamp] = useState<any>(null);
+    const [champ, setChamp] = useState<Champion | null>(null);
     const [error, setError] = useState("");
 
     // gets dynamic route parameters from

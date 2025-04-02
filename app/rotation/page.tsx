@@ -3,12 +3,13 @@
 "use client";
 import {useEffect, useState} from "react";
 import { Box, Typography, Grid, Card, CardMedia, CardContent } from "@mui/material";
+import { Champion } from "@/type"
 
 export default function WeeklyRotation() {
     // store list of free champion ids from riot api, or null before loading
     const [freeChampId, setFreeChampId] = useState<number[] | null>(null);
     // store all champion data such as champion name/image from public api (Data Dragon)
-    const [champData, setChampData] = useState<any>({});
+    const [champData, setChampData] = useState<Record<string, Champion>>({});
     // error handling and loading variables
     const [error, setError] = useState("");
     const [load, setLoad] = useState(true);

@@ -21,8 +21,12 @@ export async function GET() {
    
     const result = await rawData.json()
     return Response.json(result);
-    } catch (err: any) {
-        return Response.json({error: err.message});
+    } catch (err: unknown) {
+        let message = "Unknown error";
+            if (err instanceof Error) {
+                message = err.message;
+            }
+        return Response.json({error: message});
     }
 
 }
