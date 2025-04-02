@@ -1,4 +1,4 @@
-import ChampionForm from "../../components/champion-form";
+import ChampionForm from "../components/champion-form";
 import { Box, Typography } from "@mui/material";
 
 // app/about/page.tsx.  Home page for user input
