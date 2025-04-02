@@ -11,7 +11,7 @@ export default function Header() {
                     Champion Finder
                 </Typography>
                 <nav>
-                    <Button color="inherit" component={Link} href="/about">
+                    <Button color="inherit" component={Link} href="/">
                         Home
                     </Button>
                 
