@@ -1,7 +1,9 @@
 // handles user input of champion names
+// material ui code source: https://mui.com/material-ui/all-components/
 
 "use client";
 import { useState, useEffect } from "react";
+import {Box, Button, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 
 // handles user input of invalid champion name by adding a dropdown of all champions
 export default function ChampionForm() {
@@ -27,19 +29,31 @@ export default function ChampionForm() {
 
     // render the drop down menu and view button using dynamic routing
     return (
-        <form method="GET" action={`/champion/${selected}`}>
-
-            <select value={selected} onChange={(e) => setSelected(e.target.value)} required>
-                <option value="">Look up a Champion</option>
-                {champ.map( name => 
-                    <option key={name} value={name}>
-                        {name}
-                    </option>
-                )}
-            </select>
-        
-            <button type="submit">View</button>
-        </form >
+        <Box display="flex" justifyContent="center" mt={4}>
+            <Box
+                component="form"
+                method="GET"
+                action={`/champion/${selected}`}
+                sx={{ display: "flex", gap: 2, width: "100%", maxWidth: 500 }}
+            >
+                <FormControl fullWidth>
+                    <InputLabel>Look up a Champion</InputLabel>
+                    <Select 
+                        value={selected} 
+                        onChange={(e) => setSelected(e.target.value)} 
+                        required>
+                        
+                        {champ.map( name => 
+                            <MenuItem key={name} value={name}>
+                                {name}
+                            </MenuItem>
+                        )}
+                    </Select>
+                </FormControl>
+            
+                <Button variant="contained" type="submit">View</Button>
+            </Box>
+        </Box>
     );
 
 }

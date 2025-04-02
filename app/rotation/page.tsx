@@ -2,6 +2,7 @@
 
 "use client";
 import {useEffect, useState} from "react";
+import { Box, Typography, Grid, Card, CardMedia, CardContent } from "@mui/material";
 
 export default function WeeklyRotation() {
     // store list of free champion ids from riot api, or null before loading
@@ -71,38 +72,61 @@ export default function WeeklyRotation() {
 
     // page rendering of weekly champion rotation
     return (
-        <div className="max-w-5xl mx-auto p-6">
-          <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">Weekly Free Champion Rotation</h1>
+        <Box maxWidth="lg" mx="auto" p={4}>
+          <Typography variant="h4" textAlign="center" fontWeight="bold" >Weekly Free Champion Rotation</Typography>
           
           {load ? (
             <p>Please wait, loading weekly champion rotation...</p>
           ) : null}
 
           {error !== "" ? (
-            <p className="text-red-600 text-center font-semibold mb-4">
+            <p>
               Error: {error}
             </p>
           ) : null}
 
           {!load && error === "" && Array.isArray(freeChampId)? (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+            <Grid container spacing={3}>
               {freeChampId.map(id => {
                 const champ = getChampById(id);
                 return champ ? (
-                  <div key={id} className="text-center bg-white shadow rounded p-3 hover:shadow-md transition">
-                    <img
-                      src={`https://ddragon.leagueoflegends.com/cdn/15.6.1/img/champion/${champ.image.full}`}
-                      alt={`an image of ${champ.name}`}
-                      className="w-20 h-auto mx-auto mb-2"
-                    />
-                    <p>{champ.name}</p>
-                  </div>
+                  <Grid key={id}>
+                      <Card sx={{
+                        width: 140,
+                        height: 180,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        textAlign: "center",
+                        boxShadow: 3,
+                        "&:hover": { boxShadow: 6 },
+                      }}>
+                      <CardMedia 
+                        component="img"
+                        image={`https://ddragon.leagueoflegends.com/cdn/15.6.1/img/champion/${champ.image.full}`}
+                        alt={`an image of ${champ.name}`}
+                        sx={{
+                          width: "96px",
+                          height: "96px",
+                          objectFit: "cover",
+                          mt: 2,
+                        }}
+                      />
+                      
+                    <CardContent>
+                      <Typography variant="subtitle1" fontWeight="medium">
+                        {champ.name}
+                      </Typography>
+                    </CardContent>
+                   
+                    </Card>
+                  </Grid>
                 ) : null;
               })}
-            </div>
+            </Grid>
           ): null }
-
-        </div>
+        </Box>
       );
     
 }

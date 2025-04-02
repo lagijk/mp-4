@@ -4,6 +4,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { Box, Typography, Paper, List, ListItem, ListItemText } from "@mui/material";
 
 export default function ChampionDisplay() {
     // stores champion data and any error
@@ -39,31 +40,51 @@ export default function ChampionDisplay() {
     }, []);
 
     // error handling
-    if (error) return <p className="p-4 text-red-600">Error: {error}</p>;
-    if (!champ) return <p className="p-4">No champion data found.</p>;
+    if (error) return <Typography color="error" variant="body1" p={4}>Error: {error}</Typography>;
+    if (!champ) return <Typography variant="body1" p={4}>No champion data found.</Typography>;
     
     // page rendering
     return (
-        <div className="max-w-3xl mx-auto p-4">
-          <h1 className="text-3xl font-bold mb-2">{champ.name} - {champ.title}</h1>
-          <p className="mb-4">{champ.lore}</p>
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.id}_0.jpg`}
-            alt={champ.name}
-            className="mb-6 rounded"
-            width="400"
-          />
-          <h2 className="text-xl font-semibold mb-2">Abilities</h2>
-          <ul className="space-y-2">
-            {champ.spells.map((spell: any) => (
-              <li key={spell.id}>
-                <strong>{spell.name}</strong>: {spell.description}
-              </li>
-            ))}
-            <li>
-              <strong>Passive - {champ.passive.name}</strong>: {champ.passive.description}
-            </li>
-          </ul>
-        </div>
+          <Box maxWidth="md" mx="auto" my={6} px={2}>
+            <Typography variant="h4" fontWeight="bold">{champ.name} - {champ.title}</Typography>
+            <Typography variant="body1">{champ.lore}</Typography>
+          
+            <Box display="flex" justifyContent="center" my={4}>
+              <img
+                  src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.id}_0.jpg`}
+                  alt={champ.name}
+                  style={{
+                    borderRadius: "8px",
+                    width: "100%",             
+                    maxWidth: "400px",        
+                    height: "500px",           
+                    objectFit: "contain"        
+                  }}
+                />
+            </Box>
+            
+            <Typography variant="h5" fontWeight="medium">Abilities</Typography>
+            <Paper elevation={2}>
+              <List> 
+                <ListItem>
+                <ListItemText
+                  primary={`Passive - ${champ.passive.name}`}
+                  secondary={champ.passive.description}
+                />
+                </ListItem>
+
+                {champ.spells.map((spell: any) => (
+                  <Box key={spell.id}>
+                    <ListItem alignItems="flex-start">
+                      <ListItemText
+                        primary={spell.name}
+                        secondary={spell.description}
+                      />
+                    </ListItem>
+                  </Box>
+                ))}
+                </List>
+            </Paper>
+          </Box>
       );
 }
