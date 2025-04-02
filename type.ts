@@ -11,9 +11,12 @@ export type Champion = {
       name: string;
       description: string;
     };
-    spells: {
-      id: string;
-      name: string;
-      description: string;
-    }[];
+    spells: ChampionSpell[];
+    
   };
+
+  export type ChampionSpell = {
+    id: string;
+    name: string;
+    description: string;
+  }

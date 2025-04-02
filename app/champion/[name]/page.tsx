@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Box, Typography, Paper, List, ListItem, ListItemText } from "@mui/material";
-import { Champion } from "@/type"
+import { Champion, ChampionSpell } from "@/type"
 
 export default function ChampionDisplay() {
     // stores champion data and any error
@@ -32,13 +32,17 @@ export default function ChampionDisplay() {
                 // save result based on champion name
                 setChamp(result.data[name]);
 
-            } catch (err: any) {
-                setError(err.message);
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("An unknown error occurred.");
+                }
             }
         };
 
         fetchChamp();
-    }, []);
+    }, [name]);
 
     // error handling
     if (error) return <Typography color="error" variant="body1" p={4}>Error: {error}</Typography>;
@@ -74,7 +78,7 @@ export default function ChampionDisplay() {
                 />
                 </ListItem>
 
-                {champ.spells.map((spell: any) => (
+                {champ.spells.map((spell: ChampionSpell) => (
                   <Box key={spell.id}>
                     <ListItem alignItems="flex-start">
                       <ListItemText

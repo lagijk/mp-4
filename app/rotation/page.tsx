@@ -35,8 +35,12 @@ export default function WeeklyRotation() {
                 // if api fetch was successful, save the list of weekly rotation champion ids
                 const data = await result.json();
                 setFreeChampId(data.freeChampionIds);
-            } catch (err: any) {
-                setError(err.message); 
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("An unknown error occurred.");
+                }
             } finally {
               setLoad(false); //done loading
             }
@@ -52,8 +56,12 @@ export default function WeeklyRotation() {
                 const result = await fetch("https://ddragon.leagueoflegends.com/cdn/15.6.1/data/en_US/champion.json");
                 const data = await result.json();
                 setChampData(data.data);
-            } catch (err: any) {
-                console.error(err.message);
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("An unknown error occurred.");
+                }
             }
         };
 
